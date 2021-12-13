@@ -128,7 +128,7 @@
     });
 
     let mesh = new THREE.Mesh(_geometry, shader);
-    mesh.rotation.y = t * 200;
+    mesh.rotation.y = 200;
     mesh.scale.setScalar(0.5 + Math.random());
 
     let rand = Math.random();
