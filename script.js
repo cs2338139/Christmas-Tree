@@ -48,7 +48,7 @@
 
   function render() {
     requestAnimationFrame(render);
-    if (_controls) _controls.update();
+    // if (_controls) _controls.update();
     _renderer.render(_scene, _camera);
   }
 
