@@ -118,7 +118,7 @@
     _geometry = geometry;
   }
 
-  let t = 1;
+  var t = 1;
   function initMesh() {
     let shader = new THREE.MeshBasicMaterial({
       color: "rgb(255,255,0)",
