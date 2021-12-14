@@ -1,6 +1,7 @@
 {
   let _renderer, _scene, _camera, _controls;
   var _geometry = new Array();
+  let light;
 
   window.onload = init;
 
@@ -28,6 +29,14 @@
     );
     _camera.position.set(0, 4, 30);
     _camera.target = new THREE.Vector3(0, 0, 0);
+
+    const pointLight = new THREE.PointLight(0xff0000, 10);
+    pointLight.position.set(0, 11.5, 0);
+    _scene.add(pointLight);
+
+    const sphereSize = 10;
+    const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize);
+    _scene.add(pointLightHelper);
 
     window.addEventListener("resize", resize, false);
     resize();
@@ -102,7 +111,6 @@
       //   r -= Math.pow(p, 2) * 0.187;
       r -= p * 0.128;
       a += 0.3 - (r / 6) * 0.2;
-      // console.log(a);
 
       switch (n) {
         case 0:
@@ -135,24 +143,21 @@
     let shader;
     switch (x) {
       case 0:
-        shader = new THREE.MeshBasicMaterial({
+        shader = new THREE.MeshStandardMaterial({
           color: "rgb(15,89,21)",
-          transparent: true,
+          // transparent: true,
           side: THREE.DoubleSide,
           // wireframe:true
         });
 
-        console.log(x);
         break;
       case 1:
-        shader = new THREE.MeshBasicMaterial({
+        shader = new THREE.MeshStandardMaterial({
           color: "rgb(255,0,0)",
-          transparent: true,
+          // transparent: true,
           side: THREE.DoubleSide,
           // wireframe:true
         });
-
-        console.log(x);
         break;
 
       default:
