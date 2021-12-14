@@ -1,6 +1,6 @@
 {
   let _renderer, _scene, _camera, _controls;
-  let _geometry;
+  let _geometry = new Array();
 
   window.onload = init;
 
@@ -29,12 +29,6 @@
     _camera.position.set(0, 4, 30);
     _camera.target = new THREE.Vector3(0, 0, 0);
 
-    // _controls = new THREE.OrbitControls(_camera, document.body);
-    // _controls.target = _camera.target;
-    // _controls.enableDamping = true;
-    // _controls.dampingFactor = 0.1;
-    // _controls.rotateSpeed = 0.1;
-
     window.addEventListener("resize", resize, false);
     resize();
     requestAnimationFrame(render);
@@ -52,37 +46,18 @@
     _renderer.render(_scene, _camera);
   }
 
-  //=====// Scene //========================================//
-
   function initScene() {
-    initGeometry();
-    for (let i = 0; i < 1; i++) initMesh();
+    for (let i = 0; i < 2; i++) {
+      initGeometry(i);
+      initMesh(i);
+    }
     requestAnimationFrame(loop);
   }
 
-  function createSpiral() {
-    let points = [];
-    let r = 8;
-    let a = 0;
-    for (let i = 0; i < 120; i++) {
-      let p = 1 - i / 120;
-      //   r -= Math.pow(p, 2) * 0.187;
-      r -= p * 0.125;
-      a += 0.3 - (r / 6) * 0.2;
-      console.log(a);
-
-      points.push(new THREE.Vector3(r * Math.sin(a)/1.5, p * 3.5, r * Math.cos(a)/1.5));
-    }
-    return points;
-  }
-
-  function initGeometry() {
-    const points = createSpiral();
-
-    // Create the flat geometry
+  function initGeometry(i) {
+    const points = createSpiral(i);
     const geometry = new THREE.BufferGeometry();
 
-    // create two times as many vertices as points, as we're going to push them in opposing directions to create a ribbon
     geometry.addAttribute(
       "position",
       new THREE.BufferAttribute(new Float32Array(points.length * 3 * 2), 3)
@@ -115,35 +90,91 @@
       }
     });
 
-    _geometry = geometry;
+    _geometry[i] = geometry;
   }
 
-  var t = 1;
-  function initMesh() {
-    let shader = new THREE.MeshBasicMaterial({
-      color: "rgb(255,255,0)",
-      transparent: true,
-      side: THREE.DoubleSide,
-    //   wireframe: true,
-    });
+  function createSpiral(n) {
+    let points = [];
+    let r = 8;
+    let a = 0;
+    for (let i = 0; i < 120; i++) {
+      let p = 1 - i / 120;
+      //   r -= Math.pow(p, 2) * 0.187;
+      r -= p * 0.128;
+      a += 0.3 - (r / 6) * 0.2;
+      // console.log(a);
 
-    let mesh = new THREE.Mesh(_geometry, shader);
-    mesh.rotation.y = 200;
-    mesh.scale.setScalar(0.5 + Math.random());
+      switch (n) {
+        case 0:
+          points.push(
+            new THREE.Vector3(
+              (r * Math.sin(a)) / -1.5,
+              p * 3.5,
+              (r * Math.cos(a)) / -1.5
+            )
+          );
+          break;
+        case 1:
+          points.push(
+            new THREE.Vector3(
+              (r * Math.sin(a)) / 1.5,
+              p * 3.5,
+              (r * Math.cos(a)) / 1.5
+            )
+          );
+          break;
+
+        default:
+          break;
+      }
+    }
+    return points;
+  }
+
+  function initMesh(x) {
+    let shader;
+    switch (x) {
+      case 0:
+        shader = new THREE.MeshBasicMaterial({
+          color: "rgb(15,89,21)",
+          transparent: true,
+          side: THREE.DoubleSide,
+          // wireframe:true
+        });
+
+        console.log(x);
+        break;
+      case 1:
+        shader = new THREE.MeshBasicMaterial({
+          color: "rgb(255,0,0)",
+          transparent: true,
+          side: THREE.DoubleSide,
+          // wireframe:true
+        });
+
+        console.log(x);
+        break;
+
+      default:
+        break;
+    }
+    let mesh = new Array();
+    mesh[x] = new THREE.Mesh(_geometry[x], shader);
+    mesh[x].rotation.y = 180;
+    mesh[x].scale.setScalar(0.5 + Math.random());
 
     let rand = Math.random();
-    // console.log(rand);
-    mesh.scale.x = 2;
-    mesh.scale.y = -3;
-    mesh.scale.z = 2;
-    mesh.position.y = 10;
+    mesh[x].scale.x = 2;
+    mesh[x].scale.y = -3;
+    mesh[x].scale.z = 2;
+    mesh[x].position.y = 10;
+    // mesh[x].position.x = 10*x;
 
-    _scene.add(mesh);
-    t++;
+    _scene.add(mesh[x]);
   }
 
   function loop() {
     requestAnimationFrame(loop);
-    _scene.rotation.y += 0.02;
+    _scene.rotation.y += 0.04;
   }
 }
