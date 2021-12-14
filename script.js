@@ -1,6 +1,6 @@
 {
   let _renderer, _scene, _camera, _controls;
-  let _geometry = new Array();
+  var _geometry = new Array();
 
   window.onload = init;
 
