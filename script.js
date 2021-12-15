@@ -88,7 +88,7 @@
     );
 
     points.forEach((b, i) => {
-      let o = 0.2;
+      let o = 0.13;
 
       geometry.attributes.position.setXYZ(i * 2 + 0, b.x, b.y + o, b.z);
       geometry.attributes.position.setXYZ(i * 2 + 1, b.x, b.y - o, b.z);
@@ -199,7 +199,7 @@
     mesh[x].position.y = 7;
     // mesh[x].position.x = 10*x;
 
-    _scene.add(mesh[0]);
+    _scene.add(mesh[x]);
   }
 
   function CreateStar() {
