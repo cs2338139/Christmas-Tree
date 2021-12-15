@@ -69,11 +69,11 @@
     const points = createSpiral(i);
     const geometry = new THREE.BufferGeometry();
 
-    geometry.addAttribute(
+    geometry.setAttribute(
       "position",
       new THREE.BufferAttribute(new Float32Array(points.length * 3 * 2), 3)
     );
-    geometry.addAttribute(
+    geometry.setAttribute(
       "uv",
       new THREE.BufferAttribute(new Float32Array(points.length * 2 * 2), 2)
     );
@@ -108,23 +108,31 @@
     let points = [];
     let r = 0.2;
     let a = 0;
-    for (let i = 0; i < 170; i++) {
-      let p = 1 - i / 170;
-      if (i === 50) r = 5.9;
-      if (i < 50) {
-        r /* += p * 0.005 */;
-      } else {
-        r -= p * 0.128;
+    let h = 10;
+    let w = 215,
+      w1 = 100;
+
+    for (let i = 0; i < w; i++) {
+      let p = 1 - i / w;
+
+      if (i <= 50) {
+        h -= (1 / w) * 15;
+      } else if (i > 50 && i <= w1) {
+        h -= (1 / w) * 2;
+        r += p * 0.20;
+      } else if (i > w1) {
+        h -= (1 / w) * 15;
+        r -= p * 0.20;
       }
       // r -= Math.pow(p, 2) * 0.187;
       a += 0.3 - (r / 6) * 0.2;
-
+      console.log(i + "  " + h);
       switch (n) {
         case 0:
           points.push(
             new THREE.Vector3(
               (r * Math.sin(a)) / -1.5,
-              p * 10,
+              h,
               (r * Math.cos(a)) / -1.5
             )
           );
@@ -133,7 +141,7 @@
           points.push(
             new THREE.Vector3(
               (r * Math.sin(a)) / 1.5,
-              p * 10,
+              h,
               (r * Math.cos(a)) / 1.5
             )
           );
@@ -178,7 +186,7 @@
     mesh[x].scale.x = 2;
     mesh[x].scale.y = -1.5;
     mesh[x].scale.z = 2;
-    mesh[x].position.y = 10;
+    mesh[x].position.y = 8;
     // mesh[x].position.x = 10*x;
 
     _scene.add(mesh[x]);
@@ -190,7 +198,7 @@
       color: "rgb(255,255,0)",
     });
     starMesh = new THREE.Mesh(starGeometry, starMaterial);
-    starMesh.position.y = 11.2;
+    starMesh.position.y = 11.5;
     _scene.add(starMesh);
   }
 
