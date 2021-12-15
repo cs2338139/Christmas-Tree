@@ -1,5 +1,5 @@
 {
-  let _renderer, _scene, _camera, _controls;
+  let _renderer, _scene, _camera, controls;
   var _geometry = new Array();
   var mesh = new Array();
   let light, starMesh;
@@ -38,6 +38,12 @@
     // const sphereSize = 10;
     // const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize);
     // _scene.add(pointLightHelper);
+
+    controls = new THREE.OrbitControls(_camera, _renderer.domElement);
+    controls.enabled = true;
+    controls.minDistance = 0;
+    controls.maxDistance = 1000;
+    controls.enablePan = true;
 
     window.addEventListener("resize", resize, false);
     resize();
@@ -118,11 +124,11 @@
       if (i <= 50) {
         h -= (1 / w) * 15;
       } else if (i > 50 && i <= w1) {
-        h -= (1 / w) * 2;
-        r += p * 0.20;
+        h -= (1 / w) * 5;
+        r += p * 0.2;
       } else if (i > w1) {
         h -= (1 / w) * 15;
-        r -= p * 0.20;
+        r -= p * 0.2;
       }
       // r -= Math.pow(p, 2) * 0.187;
       a += 0.3 - (r / 6) * 0.2;
@@ -206,7 +212,7 @@
     requestAnimationFrame(loop);
     // _scene.rotation.y += 0.04;
     for (let i = 0; i < mesh.length; i++) {
-      mesh[i].rotation.y += 0.04;
+      // mesh[i].rotation.y += 0.04;
     }
     starMesh.rotation.y += 0.04;
   }
