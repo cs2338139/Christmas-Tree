@@ -88,7 +88,7 @@
     );
 
     points.forEach((b, i) => {
-      let o = 0.15;
+      let o = 0.2;
 
       geometry.attributes.position.setXYZ(i * 2 + 0, b.x, b.y + o, b.z);
       geometry.attributes.position.setXYZ(i * 2 + 1, b.x, b.y - o, b.z);
@@ -112,24 +112,28 @@
 
   function createSpiral(n) {
     let points = [];
-    let r = 0.2;
+    let r = 0;
     let a = 0;
     let h = 10;
     let w = 215,
-      w1 = 100;
+      w1 = 27;
 
     for (let i = 0; i < w; i++) {
       let p = 1 - i / w;
-
-      if (i <= 50) {
-        h -= (1 / w) * 15;
-      } else if (i > 50 && i <= w1) {
-        h -= (1 / w) * 5;
-        r += p * 0.2;
+      if (i === 0) {
+        h -= (1 / w) * (8 - i) * 10;
+        r = 0;
+      } else if (i <= 7) {
+        h -= (1 / w) * (8 - i) * 10;
+        r += p * 0.128;
+      } else if (i <= w1) {
+        h -= (1 / w) * 8;
+        r += p * 0.25;
       } else if (i > w1) {
-        h -= (1 / w) * 15;
-        r -= p * 0.215;
+        h -= (1 / w) * 10;
+        r -= p * 0.063;
       }
+
       // r -= Math.pow(p, 2) * 0.187;
       a += 0.3 - (r / 6) * 0.2;
       console.log(i + "  " + h);
@@ -195,7 +199,7 @@
     mesh[x].position.y = 7;
     // mesh[x].position.x = 10*x;
 
-    _scene.add(mesh[1]);
+    _scene.add(mesh[0]);
   }
 
   function CreateStar() {
@@ -204,7 +208,7 @@
       color: "rgb(255,255,0)",
     });
     starMesh = new THREE.Mesh(starGeometry, starMaterial);
-    starMesh.position.y = 11.5;
+    starMesh.position.y = 9.5;
     _scene.add(starMesh);
   }
 
