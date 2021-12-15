@@ -212,7 +212,7 @@
     requestAnimationFrame(loop);
     // _scene.rotation.y += 0.04;
     for (let i = 0; i < mesh.length; i++) {
-      // mesh[i].rotation.y += 0.04;
+      mesh[i].rotation.y += 0.04;
     }
     starMesh.rotation.y += 0.04;
   }
