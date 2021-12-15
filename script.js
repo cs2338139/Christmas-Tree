@@ -128,7 +128,7 @@
         r += p * 0.2;
       } else if (i > w1) {
         h -= (1 / w) * 15;
-        r -= p * 0.2;
+        r -= p * 0.215;
       }
       // r -= Math.pow(p, 2) * 0.187;
       a += 0.3 - (r / 6) * 0.2;
@@ -192,10 +192,10 @@
     mesh[x].scale.x = 2;
     mesh[x].scale.y = -1.5;
     mesh[x].scale.z = 2;
-    mesh[x].position.y = 8;
+    mesh[x].position.y = 7;
     // mesh[x].position.x = 10*x;
 
-    _scene.add(mesh[x]);
+    _scene.add(mesh[1]);
   }
 
   function CreateStar() {
