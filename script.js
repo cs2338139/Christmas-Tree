@@ -39,11 +39,11 @@
     // const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize);
     // _scene.add(pointLightHelper);
 
-    controls = new THREE.OrbitControls(_camera, _renderer.domElement);
-    controls.enabled = true;
-    controls.minDistance = 0;
-    controls.maxDistance = 1000;
-    controls.enablePan = true;
+    // controls = new THREE.OrbitControls(_camera, _renderer.domElement);
+    // controls.enabled = true;
+    // controls.minDistance = 0;
+    // controls.maxDistance = 1000;
+    // controls.enablePan = true;
 
     window.addEventListener("resize", resize, false);
     resize();
